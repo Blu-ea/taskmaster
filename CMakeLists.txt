@@ -16,6 +16,10 @@ FetchContent_MakeAvailable(yaml-cpp)
 
 include_directories(incs)
 
-add_executable(TaskManager srcs/main.cpp)
+add_executable( TaskManager
+        srcs/main.cpp
+        srcs/class/Config.cpp
+        srcs/class/Service.cpp
+)
 
 target_link_libraries(TaskManager PUBLIC yaml-cpp::yaml-cpp)

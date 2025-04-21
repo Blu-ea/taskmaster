@@ -7,4 +7,7 @@
 
 #include <iostream>
 
+#include "class/Config.hpp"
+#include "class/Service.hpp"
+
 #endif //TASKMANAGER_HPP

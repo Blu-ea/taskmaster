@@ -7,7 +7,11 @@
 
 int main(){
 
+	Config my_config("/home/Blu-ea/CLionProjects/taskmaster/test_config/TaskManager.cfg.yaml");
 
-	std::cout << "Hello World TaskManager" << std::endl;
+	if (my_config.status() != Config::OK)
+		return EXIT_FAILURE;
+
+	my_config.get_services();
 
 }

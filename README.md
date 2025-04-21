@@ -9,7 +9,7 @@ The configuration allow the user to specify the following, for each program
 that will be supervised:
 
 - `cmd` | `<String>` : The command to use to launch the program 
-- `num_procs` | `<int>` : The number of processes to start and keep running
+- `num_procs` | `[<int>] *(default: `1`)*` : The number of processes to start and keep running
 - `auto_start` | `[<boolean>]` *(default: `true`)* : Whether to start this program at launch or not
 - `auto_restart` | `always | never | unexpected_exit` : Whether the program should be restarted
 - `normal_exit_code` | `[<int> ...]` *(default: `0`)*  : Which return codes represent an "expected" exit status
@@ -27,8 +27,8 @@ Exemple:
 <service_name>:
   cmd: "/bin/my_server -u user"
   num_procs: 1
-  auto_start: 022
-  auto_restart: true
+  auto_start: no
+  auto_restart: yes
   normal_exit_code:
     - 0
     - 2
