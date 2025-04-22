@@ -8,6 +8,8 @@
 
 #include "yaml-cpp/node/node.h"
 
+class Service;
+
 class Config {
 
 public:
@@ -22,7 +24,7 @@ public:
 		NOT_OK,
 	};
 	[[nodiscard]] Status status() const { return _status;}
-	void get_services();
+	[[nodiscard]] std::list<Service> get_services() const;
 
 private:
 	YAML::Node _config;

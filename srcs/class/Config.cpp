@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include "class/Service.hpp"
 #include "yaml-cpp/yaml.h"
 
 Config::Config(const std::string& config_file) : config_file_name(config_file)
@@ -40,15 +41,18 @@ Config::Config(const std::string& config_file) : config_file_name(config_file)
 	}
 }
 
-void Config::get_services()
+std::list<Service> Config::get_services() const
 {
+	std::list<Service> services;
+	std::cout << " all size - " <<  _config["task"].size() << std::endl ;
 
-	for (YAML::const_iterator it = _config.begin(); it != _config.end(); ++it)
-	{
-		std::cout << "Service name = : "  << it->first.as<std::string>() << std::endl;
+	YAML::Node tasks = _config["task"];
+	for (YAML::const_iterator task = tasks.begin(); task != tasks.end(); ++task){
+		std::cout << "[TaskManager]- Loading " << task->first << std::endl;
+		Service service = task->second.as<Service>();
+		service.set_name(task->first.as<std::string>());
 
-
-		// std::cout << " | Value: " << it->second.as<std::map>() << std::endl;
+		services.push_back(service);
 	}
-
+	return services;
 }

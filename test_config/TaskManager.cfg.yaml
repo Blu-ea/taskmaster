@@ -1,14 +1,26 @@
-my_server:
-  cmd: "/bin/my_server -u user"
-  num_procs: 1
-  auto_start: 022
-  auto_restart: true
-  normal_exit_code:
-    - 0
-    - 2
-  startup_grace_period: 5
-  stop_signal: TERM # can be SIGTERM or 15
-  log_file:
-    - stout: "/tmp/log/my_server.log"
-    - sterr: discard # use discard for "/dev/null"
-  umask: 022
+task:
+  my_server:
+    cmd: "/bin/my_server -u user"
+    num_procs: 1
+    auto_start: 022
+    auto_restart: always
+    normal_exit_code:
+      - 0
+      - 2
+    startup_grace_period: 5
+    stop_signal: TERM # can be SIGTERM or 15
+    log_file:
+      stdout: "/tmp/log/my_server.log"
+      stderr: discard # use discard for "/dev/null"
+    umask: 022
+  other_service:
+    cmd: "/bin/other_service"
+    num_procs: 2
+    auto_start: 000
+    auto_restart: no
+    startup_grace_period: 5
+    stop_signal: TERM # can be SIGTERM or 15
+    log_file:
+      stdout: "/tmp/log/my_server2.log"
+      stderr: discard # use discard for "/dev/null"
+    umask: 022

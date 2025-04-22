@@ -12,6 +12,6 @@ int main(){
 	if (my_config.status() != Config::OK)
 		return EXIT_FAILURE;
 
-	my_config.get_services();
-
+	std::list<Service> services = my_config.get_services();
+	;
 }
