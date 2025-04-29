@@ -12,7 +12,7 @@ Start with a top level word :`task`, then a list of all your tasks, set they nam
 - `cmd` | `<String>` : The command to use to launch the program 
 - `num_procs` | `[<int>] *(default: `1`)*` : The number of processes to start and keep running
 - `auto_start` | `[<boolean>]` *(default: `true`)* : Whether to start this program at launch or not
-- `auto_restart` | `<always|yes> | <never|no> | on_failure` : Whether the program should be restarted
+- `auto_restart` | `<always|yes> | <never|no> | <on_failure>` : Whether the program should be restarted
 - `normal_exit_code` | `[<int> ...]` *(default: `0`)*  : Which return codes represent an "expected" exit status
 - `startup_grace_period	` | `[<int>]` *(default: `10`)* : How long the program should be running after it’s started for it to be considered "successfully started" in seconds
 - `num_retry` | `[<int>]` *(default: `3`)*  : How many times a restart should be attempted before aborting
@@ -29,7 +29,7 @@ task:
   <service_name>:
     cmd: "/bin/my_server -u user"
     num_procs: 1
-    auto_start: no
+    auto_start: false
     auto_restart: always
     normal_exit_code:
       - 0
@@ -41,3 +41,17 @@ task:
       stderr: discard # use discard for "/dev/null"
     umask: 022
 ```
+
+
+---
+ ## Possible commands
+
+ - `help [<command>]`
+ - `load <conf.file>`
+ - `reload` 
+ - `start [<service> ... ]`
+ - `restart [<service> ... ]`
+ - `stop [<service> ... ]`
+ - `info <service>`
+ - `list`
+ - `exit`

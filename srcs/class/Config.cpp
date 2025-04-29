@@ -9,6 +9,10 @@
 #include "class/Service.hpp"
 #include "yaml-cpp/yaml.h"
 
+Config::Config() : _status(NOT_INITIALIZED)
+{
+}
+
 Config::Config(const std::string& config_file) : config_file_name(config_file)
 {
 	try
@@ -21,18 +25,6 @@ Config::Config(const std::string& config_file) : config_file_name(config_file)
 		std::cerr << e.what() << std::endl;
 		return;
 	}
-
-	{ // todo: Remove later.
-		std::cout << "yaml Config:";
-		switch (_config.Type()) {
-		case YAML::NodeType::Null: std::cout << "Null" << std::endl; break;
-		case YAML::NodeType::Scalar: std::cout << "Scalar" << std::endl; break;
-		case YAML::NodeType::Sequence: std::cout << "Sequence" << std::endl; break;
-		case YAML::NodeType::Map: std::cout << "Map" << std::endl; break;
-		case YAML::NodeType::Undefined: std::cout << "Undefined" << std::endl; break;
-		}
-	}
-
 	if (!_config.IsMap())
 	{
 		_status = NOT_OK;

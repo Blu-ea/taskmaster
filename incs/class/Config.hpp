@@ -13,7 +13,7 @@ class Service;
 class Config {
 
 public:
-	Config() = delete;
+	Config();
 	explicit Config(const std::string&);
 	~Config() = default;
 
@@ -22,6 +22,7 @@ public:
 	{
 		OK,
 		NOT_OK,
+		NOT_INITIALIZED,
 	};
 	[[nodiscard]] Status status() const { return _status;}
 	[[nodiscard]] std::list<Service> get_services() const;

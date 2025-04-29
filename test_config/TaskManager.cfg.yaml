@@ -2,7 +2,7 @@ task:
   my_server:
     cmd: "/bin/my_server -u user"
     num_procs: 1
-    auto_start: 022
+    auto_start: false
     auto_restart: always
     normal_exit_code:
       - 0
@@ -16,7 +16,7 @@ task:
   other_service:
     cmd: "/bin/other_service"
     num_procs: 2
-    auto_start: 000
+    auto_start: false
     auto_restart: no
     startup_grace_period: 5
     stop_signal: TERM # can be SIGTERM or 15
