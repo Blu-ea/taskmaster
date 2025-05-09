@@ -7,21 +7,6 @@
 #include <iostream>
 #include <bits/ostream.tcc>
 
-void Commands::help()
-{
-	printf(
-		"This is the help\n"
-		" - `help [<command>]`\n"
-		"- `load <conf.file>`\n"
-		"- `reload` \n"
-		"- `start [<service> ... ]`\n"
-		"- `restart [<service> ... ]`\n"
-		"- `stop [<service> ... ]`\n"
-		"- `info <service>`\n"
-		"- `list`");
-}
-
-
 void Commands::load(const std::vector<std::string>&)
 {
 }

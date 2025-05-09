@@ -23,6 +23,7 @@ add_executable( TaskManager
         srcs/class/Controler.cpp
         srcs/Commands.cpp
         incs/Commands.hpp
+        srcs/Commands/help.cpp
 )
 
 target_link_libraries(TaskManager PUBLIC yaml-cpp::yaml-cpp)

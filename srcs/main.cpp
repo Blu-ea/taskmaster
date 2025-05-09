@@ -2,6 +2,7 @@
 // Created by Blu-ea on 21/04/25.
 //
 
+#include "Commands.hpp"
 #include "../incs/taskmanager.hpp"
 #include "class/Controler.hpp"
 #include "yaml-cpp/yaml.h"
@@ -20,9 +21,10 @@ int main(){
 
 	Controller controller;
 
-	while(!exit && std::getline(std::cin, inputl_string))
+	while(Controller::prompt("$Taskmaster>", inputl_string))
 	{
+
 		controller.execute(inputl_string);
 	}
-	controller.exit();
+	Commands::exit();
 }

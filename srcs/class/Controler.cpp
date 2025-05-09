@@ -36,50 +36,64 @@ void Controller::execute(std::string input)
 			continue;
 		command_vector.push_back(std::string_view(word));
 	}
-	if (command_vector.empty())
+	auto it = command_vector.begin();
+	if (it == command_vector.end())
 		return;
 	try
 	{
-		(this->*funct.at(command_vector[0]))({});
+		(this->*funct.at(*it))(++it, command_vector.end());
 	} catch (std::out_of_range e)
 	{
 		std::cout << "TaskMaster: " << command_vector[0] << ": This function does not exist. Use help to see commands" << std::endl;
 	}
 }
 
-void Controller::help(std::vector<std::string> input)
+bool Controller::prompt(const std::string& prompt, std::string& user_input)
+{
+	std::cout << "\033[32m" << prompt << "\033[0m";
+	std::getline(std::cin, user_input);
+	// std::cout
+	return !std::cin.eof();
+}
+
+void Controller::help(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
+{
+	if (begin == end)
+		Commands::help();
+	else
+		Commands::help(*begin);
+}
+
+void Controller::load(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
+{
+
+}
+
+void Controller::reload(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 }
 
-void Controller::load(std::vector<std::string> input)
+void Controller::start(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 }
 
-void Controller::reload(std::vector<std::string> input)
+void Controller::restart(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 }
 
-void Controller::start(std::vector<std::string> input)
+void Controller::stop(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 }
 
-void Controller::restart(std::vector<std::string> input)
+void Controller::info(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 }
 
-void Controller::stop(std::vector<std::string> input)
+void Controller::list(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 }
 
-void Controller::info(std::vector<std::string> input)
-{
-}
-
-void Controller::list(std::vector<std::string> input)
-{
-}
-
-void Controller::exit(std::vector<std::string> input)
+void Controller::exit(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end)
 {
 	Commands::exit();
 }

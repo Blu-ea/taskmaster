@@ -24,7 +24,7 @@
 class Controller {
 public:
 
-	typedef void (Controller::*commands_function)(std::vector<std::string> input);
+	typedef void (Controller::*commands_function)(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
 
 	std::map<std::string_view, commands_function> funct;
 
@@ -32,21 +32,22 @@ public:
 	~Controller() = default;
 	Controller(const Controller& controller) = delete;
 
+	static bool prompt(const std::string& prompt, std::string& user_input);
 	void execute(std::string input);
 
-	void help(std::vector<std::string> input);
+	void help(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
 
-	void load(std::vector<std::string> input);
-	void reload(std::vector<std::string> input);
+	void load(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
+	void reload(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
 
-	void start(std::vector<std::string> input);
-	void restart(std::vector<std::string> input);
-	void stop(std::vector<std::string> input);
+	void start(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
+	void restart(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
+	void stop(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
 
-	void info(std::vector<std::string> input);
-	void list(std::vector<std::string> input);
+	void info(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
+	void list(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
 
-	void exit(std::vector<std::string> input = {});
+	void exit(std::vector<std::string_view>::iterator begin, std::vector<std::string_view>::iterator end);
 
 private:
 	Config config;
