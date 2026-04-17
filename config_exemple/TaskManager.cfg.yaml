@@ -8,19 +8,20 @@ task:
       - 0
       - 2
     startup_grace_period: 5
-    stop_signal: TERM # can be SIGTERM or 15
+    stop_signal: TERM
     log_file:
       stdout: "/tmp/log/my_server.log"
-      stderr: discard # use discard for "/dev/null"
-    umask: 022
+      stderr: discard
+    umask: "022"
+
   other_service:
     cmd: "/bin/other_service"
     num_procs: 2
     auto_start: false
     auto_restart: no
     startup_grace_period: 5
-    stop_signal: TERM # can be SIGTERM or 15
+    stop_signal: TERM
     log_file:
       stdout: "/tmp/log/my_server2.log"
-      stderr: discard # use discard for "/dev/null"
-    umask: 022
+      stderr: discard
+    umask: "777"

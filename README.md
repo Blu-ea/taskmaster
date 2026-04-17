@@ -1,6 +1,6 @@
 # Task Manager
 
-This Project is a task manager in Cpp, using a `.yaml` as configuration file
+This Project is a task manager in [C3](https://c3-lang.org), using a `.yaml` as configuration file
 
 ---
 ## Configuration
@@ -46,7 +46,7 @@ task:
  ## Possible commands
 
  - `help [<command>]`
- - `load <conf.file>`
+ - `load <conf.file> [...]`
  - `reload` 
  - `start [<service> ... ]`
  - `restart [<service> ... ]`

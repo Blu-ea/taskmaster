@@ -1,0 +1,27 @@
+{
+    "my_server" :
+    {
+        "cmd": "/bin/my_server - user",
+        "num_procs": 1,
+        "auto_start": false,
+        "auto_restart": "always",
+        "normal_exit_code": [0, 2],
+        "startup-grace_period": 5,
+        "stop_signal": "TERM",
+        "logfile": "tmp/log/my_server.log",
+        "errfile": "discard",
+        "umask": 22 
+    },
+    "other_service" :
+    {
+        "cmd": "/bin/other_service",
+        "num_procs": 2,
+        "auto_start": false,
+        "auto_restart": "no",
+        "startup-grace_period": 5,
+        "stop_signal": "TERM",
+        "logfile": "tmp/log/other_service.log",
+        "errfile": "discard",
+        "umask": "022"
+    }
+}
