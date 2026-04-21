@@ -47,7 +47,7 @@ task:
 
  - `help [<command>]`
  - `load <conf.file> [...]`
- - `reload` 
+ - `reload`
  - `start [<service> ... ]`
  - `restart [<service> ... ]`
  - `stop [<service> ... ]`

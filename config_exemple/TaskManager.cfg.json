@@ -6,11 +6,11 @@
         "auto_start": false,
         "auto_restart": "always",
         "normal_exit_code": [0, 2],
-        "startup-grace_period": 5,
+        "startup_grace_period": 5,
         "stop_signal": "TERM",
         "logfile": "tmp/log/my_server.log",
         "errfile": "discard",
-        "umask": 22 
+        "umask": "022"
     },
     "other_service" :
     {
@@ -18,7 +18,7 @@
         "num_procs": 2,
         "auto_start": false,
         "auto_restart": "no",
-        "startup-grace_period": 5,
+        "startup_grace_period": 5,
         "stop_signal": "TERM",
         "logfile": "tmp/log/other_service.log",
         "errfile": "discard",
