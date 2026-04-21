@@ -1,4 +1,4 @@
-module taskmaster;
+module taskmaster::daemon;
 import std::io;
 import std::net;
 import std::io::path;

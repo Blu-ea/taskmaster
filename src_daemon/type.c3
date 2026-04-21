@@ -1,4 +1,4 @@
-module taskmaster;
+module taskmaster::daemon;
 
 enum StartupPlan{
 	ALWAYS, NEVER, ON_FAILURE

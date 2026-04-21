@@ -16,11 +16,11 @@
   "targets": {
     "TaskMaster": {
       "type": "executable",
-      "sources": [ "src/**" ]
+      "sources": [ "src_daemon/**", "src_common/**" ]
     },
     "TaskMasterCli": {
       "type" : "executable",
-      "sources": [ "src_cli/**" ]
+      "sources": [ "src_cli/**", "src_common/**" ]
     }
   },
   "cpu": "generic",

@@ -1,7 +1,4 @@
-module taskmastercli;
-import std::io;
-import std::net;
-import std::io::path;
+module taskmaster::cli;
 
 fn int main(String[] args)
 {
