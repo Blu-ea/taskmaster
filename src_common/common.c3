@@ -4,11 +4,11 @@ import std::io;
 
 extern fn CInt unlink(ZString pathname);
 
-fn void? loop_read_and_send(NativeSocket fd)
+fn void? loop_read_and_send(NativeSocket fd, String prompt)
 {
 	while (true)
 	{
-		io::print("TaskMasterCli> ");
+		io::print(prompt);
 		@pool()
 		{
 			String? line = io::treadline();

@@ -3,6 +3,8 @@ import taskmaster::common;
 import std::net::os;
 import std::io;
 
+const String PROMPT = "TaskMasterCli> ";
+
 fn int main(String[] args)
 {
 	NativeSocket? fd = common::make_socket();
@@ -19,7 +21,7 @@ fn int main(String[] args)
 		return 1;
 	}
 
-	if (catch common::loop_read_and_send(fd)) return 1;
+	if (catch common::loop_read_and_send(fd, PROMPT)) return 1;
 
 	return 0;
 }
