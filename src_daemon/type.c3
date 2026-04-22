@@ -1,5 +1,7 @@
 module taskmaster::daemon;
 
+import std::collections::list;
+
 enum StartupPlan : (String e_val) {
 	ALWAYS {"always"},
 	NEVER {"never"},
@@ -59,4 +61,7 @@ fn Service* new_service(
 	return ret;
 }
 
-
+struct Option{
+	bool is_daemon; // -d --daemon
+	List {String} other_args;
+}
