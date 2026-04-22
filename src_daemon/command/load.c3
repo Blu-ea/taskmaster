@@ -9,11 +9,9 @@ import std::collections::map;
 
 
 // todo: set the result to be hashMap
-fn Service[]? load(Path file_path) {
+fn void? load(Path file_path, HashMap {String, Service*}* service_map) {
 	String file_content = (String) file::load_path(mem, file_path)!;
 	defer free(file_content);
-
-	HashMap {String, Service} new_services;
 
 	Object* a = json::parse(mem, file_content)!;
 	defer free(a);
@@ -96,12 +94,10 @@ fn Service[]? load(Path file_path) {
 				umask,
 				normal_exit_code
 			);
-			io::printn(*service);
+			// io::printn(*service);
+			service_map.set(service_name, service);
 		};
 	};
-
-
-	return io::FILE_NOT_FOUND~;
 }
 
 
