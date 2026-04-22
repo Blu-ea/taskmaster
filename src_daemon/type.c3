@@ -1,7 +1,9 @@
 module taskmaster::daemon;
 
-enum StartupPlan{
-	ALWAYS, NEVER, ON_FAILURE
+enum StartupPlan : (String e_val) {
+	ALWAYS {"always"},
+	NEVER {"never"},
+	ON_FAILURE {"on_failure"}
 }
 enum Signal{
 	TERM,
@@ -22,25 +24,25 @@ struct Service{
 	String logfile;
 	String errfile;
 	String umask;
-	ichar* normal_exit_code;
+	ichar[] normal_exit_code;
 }
 
-fn Service new_service(
+fn Service* new_service(
 	String _cmd,
-	int _num_proc = 1,
-	bool _auto_start = true,
+	int _num_proc,
+	bool _auto_start,
 	StartupPlan _auto_restart,
-	int _startup_grace_period = 10,
-	int _num_retry = 3,
+	int _startup_grace_period,
+	int _num_retry,
 	Signal _stop_signal,
-	int _stop_timeout = 10,
-	String _logfile = "",
-	String _errfile = "",
-	String _umask = "000",
-	ichar[] _normal_exit_code = {0}
+	int _stop_timeout,
+	String _logfile,
+	String _errfile,
+	String _umask,
+	ichar[] _normal_exit_code
 ){
-	ichar* exit_codes = malloc(_normal_exit_code.len * 8);
-	return (Service) {
+	
+	Service* ret =  mem::new(Service, {
 		.cmd = _cmd,
 		.num_proc = _num_proc,
 		.auto_start = _auto_start,
@@ -52,6 +54,9 @@ fn Service new_service(
 		.logfile = _logfile,
 		.errfile = _errfile,
 		.umask = _umask,
-		.normal_exit_code = exit_codes
-	};
+		.normal_exit_code = _normal_exit_code
+	});
+	return ret;
 }
+
+
