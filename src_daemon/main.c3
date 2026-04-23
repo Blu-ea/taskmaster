@@ -11,7 +11,7 @@ import std::io::path;
 fn void main(String[] args)
 {
 	Option opt = get_option(args[1..]);
-	defer free(opt.other_args);
+	defer opt.other_args.free();
 
 
 	Path file_path = path::new(mem, "/home/amiguez/Projects/taskmaster/config_exemple/TaskManager.cfg.json")!!;
