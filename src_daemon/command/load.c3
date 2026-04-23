@@ -29,26 +29,22 @@ fn void? load(Path file_path, HashMap {String, Service*}* service_map) {
 				missing_key(file_path, service_name, "cmd");
 				break;
 			}
-			//	Enum doesn't seems to work properly :(
-			//	todo : Waiting for a response  - https://github.com/c3lang/c3c/issues/3163
+
+			// Object*? t_auto_restart = value.get("auto_restart");
+			// if (catch err = t_auto_restart){
+			// 	missing_key(file_path, service_name, "auto_restart");
+			// 	break;
+			// }
+			// StartupPlan auto_restart = t_auto_restart.to_value(StartupPlan, strict: false)!!;
 			StartupPlan auto_restart = NEVER;
+
+			// Object*? t_stop_signal = value.get("stop_signal");
+			// if (catch err = t_stop_signal){
+			// 	missing_key(file_path, service_name, "stop_signal");
+			// 	break;
+			// }
+			// Signal stop_signal = t_stop_signal.to_value(Signal, strict: false)!!;
 			Signal stop_signal = TERM;
-
-				// StartupPlan auto_restart = value.get_enum(StartupPlan, "auto_restart")!;
-
-				// String? auto_restart_string = value.get_string("auto_restart");
-				// if(catch err = auto_restart_string) {
-				// 	missing_key(file_path, service_name, "auto_restart");
-				// 	break;
-				// }
-				// StartupPlan auto_restart = StartupPlan::lookup_field(e_val, auto_restart_string);
-				// io::printn(auto_restart);
-				
-				// int? stop_signal = value.get_int("stop_signal");
-				// if(catch err = stop_signal) {
-				// 	missing_key(file_path, service_name, "stop_signal");
-				// 	break;
-				// }
 
 			String? umask = value.get_string("umask");
 			if(catch err = umask) {
