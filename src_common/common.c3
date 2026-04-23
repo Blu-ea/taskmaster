@@ -26,7 +26,7 @@ fn void? loop_read_and_send(NativeSocket fd, String prompt)
 
 			if (line.to_lower_tcopy() == "quit") break;
 
-			isz ret = sendto(fd, line, line.len, 0, null, null);
+			sz ret = sendto(fd, line, line.len, 0, (SockAddrPtr)null, null);
 			if (ret < 0)
 			{
 				io::eprintfn("\nFailed to send data to socket: %s", os::socket_error());
