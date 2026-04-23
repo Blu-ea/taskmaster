@@ -1,4 +1,4 @@
-module taskmaster::common::option
+module taskmaster::common::option;
 
 struct Option{
 	bool is_daemon; // -d --daemon
