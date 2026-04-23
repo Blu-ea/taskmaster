@@ -26,24 +26,3 @@ fn void main(String[] args)
 
 }
 
-
-fn Option get_option(String[] args)
-{
-	Option ret;
-	ret.other_args.init(mem);
-
-	foreach (arg : args)
-	{
-		switch (arg)
-		{
-		case "-d":
-		case "--daemon":
-			ret.is_daemon = true;
-
-		default:
-			ret.other_args.push(arg);
-
-		}
-	}
-	return ret;
-}
