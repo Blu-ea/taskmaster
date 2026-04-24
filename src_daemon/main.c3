@@ -10,6 +10,7 @@ import std::thread;
 
 import libc;
 extern fn Pid_t fork();
+extern fn CInt daemon(CInt nochdir, CInt noclose);
 
 fn void main(String[] args)
 {
@@ -35,39 +36,31 @@ fn void main(String[] args)
 	}
 
 
-
-	Pid_t pid = fork();
-	if (pid == -1) io::eprintn("Error: canot launch TaskMaster");
-
-	if (pid == 0) {
+	if (opt.is_daemon){
+		if (daemon(0 ,0))
+		{
+			io::eprintn("Error: couldn't launch daemon");
+		}
 		main_daemon(opt, sock);
 	} else {
-		main_parent(opt, sock, pid);
+		Pid_t pid = fork();
+		if (pid == 0) {
+			main_daemon(opt, sock);
+		} else {
+			main_parent(opt, sock, pid);
+		}
 	}
 
-
 }
-
-	// [x] Create link `make_socketpair()` | `make_socket()`
-	// [x] create a fork
-	// [x] Parent - promt -- si -d -- kill itself 
-	// [ ] Child - daemon -- si -d -- create another fork then kill itself
-		// created taskes -- beware to close sockets to avoid strage stuff
-
 
 fn void main_parent(common::option::Option opt, NativeSocket[2] tmp_sock, Pid_t child_pid) {
 
 	NativeSocket sock;
-	if (opt.is_daemon) {
-		libc::close(tmp_sock[0]);
-		io::printfn("TaskMaster Daemon launched with pid [%d]", child_pid);
-	
-		os::exit(0);
-	} else {
-		sock = tmp_sock[0];
-		defer(libc::close(sock));
-		libc::close(tmp_sock[1]);
-	}
+
+	sock = tmp_sock[0];
+	defer(libc::close(sock));
+	libc::close(tmp_sock[1]);
+	thread::sleep((time::Duration) 5000000);
 	io::printn("Im the prompt :D");
 }
 
@@ -83,10 +76,5 @@ fn void main_daemon(common::option::Option opt, NativeSocket[2] tmp_sock) {
 	}
 	defer(libc::close(sock));
 
-	// HashMap {String, Service*} service_map;
-	// service_map.init(mem);
-
-	thread::sleep((std::time::Duration) 5000000);
-	io::printn("I m the daemon");
-	
+	loop_daemon(sock);
 }
