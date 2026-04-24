@@ -1,5 +1,7 @@
 module taskmaster::common::option;
 
+import std::collections::list;
+
 struct Option{
 	bool is_daemon; // -d --daemon
 	List {String} other_args;
