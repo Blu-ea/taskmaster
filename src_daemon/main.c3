@@ -8,9 +8,11 @@ import std::collections::list;
 import std::net;
 import std::io::path;
 
+import taskmaster::common::option;
+
 fn void main(String[] args)
 {
-	Option opt = get_option(args[1..]);
+	option::Option opt = option::get_option(args[1..]);
 	defer opt.other_args.free();
 
 
@@ -22,7 +24,5 @@ fn void main(String[] args)
 	command::load(file_path, &service_map)!!;
 
 	io::printn(service_map);
-
-
 }
 
