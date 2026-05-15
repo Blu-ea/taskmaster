@@ -13,6 +13,7 @@
   // You can use 'c3c --list-targets' to list all valid targets.
   // "target": "windows-x64",
   // Targets.
+  "link-args": [ "-lreadline" ],
   "targets": {
     "TaskMaster": {
       "type": "executable",

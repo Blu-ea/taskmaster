@@ -2,37 +2,30 @@ module taskmaster::common;
 import std::net::os;
 import std::io;
 
-extern fn CInt unlink(ZString pathname);
+extern fn CInt unlink(ZString pathname) @cname("unlink");
+extern fn ZString readline(ZString prompt) @cname("readline");
+extern fn void free(void *ptr) @cname("free");
 
-fn void? loop_read_and_send(NativeSocket fd, String prompt)
+fn void? loop_read_and_send(NativeSocket fd, ZString prompt)
 {
-	while (true)
+	while (true) @pool()
 	{
-		io::print(prompt);
-		@pool()
+		ZString line = readline(prompt);
+		defer free(line);
+		if (line == null)
 		{
-			String? line = io::treadline();
-			if (catch excuse = line)
-			{
-				if (excuse == io::EOF)
-				{
-					io::printn("quit");
-					break;
-				}
+			io::printn("quit");
+			break;
+		}
 
-				io::eprintfn("\nFailed to read stdin: %s", excuse);
-				return excuse~;
-			}
+		if (line == "quit") break;
 
-			if (line.to_lower_tcopy() == "quit") break;
-
-			sz ret = sendto(fd, line, line.len, 0, (SockAddrPtr)null, null);
-			if (ret < 0)
-			{
-				io::eprintfn("\nFailed to send data to socket: %s", os::socket_error());
-				return os::socket_error()~;
-			}
-		};
-	}
+		sz ret = sendto(fd, line, line.len(), 0, (SockAddrPtr)null, null);
+		if (ret < 0)
+		{
+			io::eprintfn("\nFailed to send data to socket: %s", os::socket_error());
+			return os::socket_error()~;
+		}
+	};
 	io::printn("Exiting...");
 }
