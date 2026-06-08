@@ -76,5 +76,8 @@ fn void main_daemon(common::option::Option opt, NativeSocket[2] tmp_sock) {
 	}
 	defer(libc::close(sock));
 
-	loop_daemon(sock);
+	ServiceMap* service_map;
+	service_map.init(mem);
+
+	loop_daemon(sock, service_map);
 }
