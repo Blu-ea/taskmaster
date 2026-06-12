@@ -7,6 +7,7 @@ import std::io;
 import std::net::os;
 import std::os;
 import std::thread;
+import taskmaster::daemon::parsing;
 
 import libc;
 extern fn Pid_t fork();
@@ -14,6 +15,15 @@ extern fn CInt daemon(CInt nochdir, CInt noclose);
 
 fn void main(String[] args)
 {
+	NativeSocket? tmpsock = common::make_socket();
+	if (try tmpsock && try common::bind_socket(tmpsock)){
+		io::printn("Socket created :D");
+		loop_daemon(tmpsock, null);
+	} else{
+		io::printn("No socket created :(");
+	}
+	os::exit(0); // exemple Test
+
 	option::Option opt = option::get_option(args[1..]);
 	defer opt.other_args.free();
 

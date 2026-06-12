@@ -2,7 +2,7 @@ module taskmaster::common;
 import std::net::os;
 
 extern fn sz recvfrom(CInt sockfd, void* buf, usz len, CInt flags, SockAddrPtr src_addr, Socklen_t* addrlen);
-extern fn sz sendto(CInt sockfd, void* buf, usz len, CInt flags, SockAddrPtr dest_addr, Socklen_t* addrlen);
+extern fn sz sendto(CInt sockfd, void* buf, usz len, CInt flags, SockAddrPtr dest_addr, Socklen_t addrlen);
 
 const SERVER_SOCKET_FILE = "/tmp/taskmaster.sock";
 
@@ -49,3 +49,21 @@ fn void? connect_socket(NativeSocket fd)
 
 	if (ret < 0) return os::socket_error()~;
 }
+
+import std::io;
+
+macro sz @recvfrom(NativeSocket #socket, char[] #buff, SockAddrUn* #client_addr){
+	Socklen_t client_addr_len = SockAddrUn::size;
+
+	sz read_sz = recvfrom(#socket, #buff, #buff.len - 1, 0,
+								(SockAddrPtr)#client_addr, &client_addr_len);
+	return read_sz;
+
+}
+
+macro sz @sendto(NativeSocket #socket, String #buff, SockAddrUn* #client_addr){	
+	sz read_sz = sendto(#socket, #buff, #buff.len, 0, (SockAddrPtr)&client_addr, client_addr_len);
+	return read_sz;
+}
+
+
