@@ -2,15 +2,16 @@ module taskmaster::daemon;
 
 import std::collections::list;
 
-enum StartupPlan : (String e_val) {
+enum StartupPlan : (String str_value) {
 	ALWAYS {"always"},
 	NEVER {"never"},
 	ON_FAILURE {"on_failure"}
 }
-enum Signal{
-	TERM,
-	INT,
-	UP,
+
+enum Signal : (String str_value){
+	TERM {"sigterm"},
+	INT {"sigint"},
+	UP {"sigup"},
 }
 
 

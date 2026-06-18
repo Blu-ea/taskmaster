@@ -30,21 +30,19 @@ fn void? load(Path file_path, HashMap {String, Service*}* service_map) {
 				break;
 			}
 
-			// Object*? t_auto_restart = value.get("auto_restart");
-			// if (catch err = t_auto_restart){
-			// 	missing_key(file_path, service_name, "auto_restart");
-			// 	break;
-			// }
-			// StartupPlan auto_restart = t_auto_restart.to_value(StartupPlan, strict: false)!!;
-			StartupPlan auto_restart = NEVER;
+			StartupPlan? auto_restart;
+			@get_enum(StartupPlan, "str_value", "auto_restart", value, auto_restart);
+			if (catch err = auto_restart){
+				missing_key(file_path, service_name, "auto_restart");
+				break;
+			}
 
-			// Object*? t_stop_signal = value.get("stop_signal");
-			// if (catch err = t_stop_signal){
-			// 	missing_key(file_path, service_name, "stop_signal");
-			// 	break;
-			// }
-			// Signal stop_signal = t_stop_signal.to_value(Signal, strict: false)!!;
-			Signal stop_signal = TERM;
+			Signal? stop_signal;
+			@get_enum(Signal, "str_value", "stop_signal", value, stop_signal);
+			if (catch err = stop_signal){
+				missing_key(file_path, service_name, "stop_signal");
+				break;
+			}
 
 			String? umask = value.get_string("umask");
 			if(catch err = umask) {
@@ -90,12 +88,32 @@ fn void? load(Path file_path, HashMap {String, Service*}* service_map) {
 				umask,
 				normal_exit_code
 			);
-			// io::printn(*service);
 			service_map.set(service_name, service);
 		};
 	};
 }
 
+macro void @get_enum($Type, $e_key, $o_key, #object, #ret)
+{
+	Object*? t_object = #object.get($o_key);
+	if (catch err = t_object){
+		#ret = NOT_FOUND~;
+		return;
+	}
+	int ordinal_value;
+	switch {
+		case @ok(@try( ordinal_value, t_object.to_value(int, strict: false))):
+			if (ordinal_value < $Type::len)
+				{#ret = $Type::from_ordinal(ordinal_value);}
+			else
+				{#ret = NOT_FOUND~;}
+		case t_object.is_string():
+			#ret = runtime::@enum_lookup($Type, $e_key, t_object.to_value(String)); // not_found
+		default:
+			#ret = TYPE_MISMATCH~;
+	}
+	
+}
 
 fn void missing_key(Path file_path, String service_name, String key)
 {
